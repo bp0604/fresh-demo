@@ -41,6 +41,7 @@ export const handler: Handlers = {
       body: {
         query: {
           match: {
+            [field]: query,
             // name: "good",
           },
         },
@@ -48,10 +49,6 @@ export const handler: Handlers = {
         size: 10,
       },
     };
-    searchParams.body.query.match = {
-      [field]: query
-    };
-    // console.log(searchParams);
 
     try {
       const res: SearchResponse<Source> = await client.search<Source>(
