@@ -1,11 +1,18 @@
-FROM denoland/deno:1.29.1
+# FROM denoland/deno:1.29.1
+FROM registry.baomihua.xyz/baopeng/deno:1.29.1
+
+# COPY ./build/sources.list /etc/apt/sources.list
+
+# RUN apt update \
+# && apt install curl -y
+
+WORKDIR /app
 
 ARG GIT_REVISION
 ENV DENO_DEPLOYMENT_ID=${GIT_REVISION}
 
-WORKDIR /app
-
 COPY . .
+
 RUN deno cache main.ts --import-map=import_map.json
 
 EXPOSE 8000

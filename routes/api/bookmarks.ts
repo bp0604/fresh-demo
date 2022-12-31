@@ -78,6 +78,8 @@ export const handler: Handlers = {
       });
 
     } catch (error) {
+      console.log(error)
+      
       const ret = {
         error: error.error.reason
       }
@@ -103,6 +105,4 @@ export const handler: Handlers = {
 // npm
 // https://www.npmjs.com/package/@elastic/elasticsearch
 // https://juejin.cn/post/6844903881898459150
-
-
 
