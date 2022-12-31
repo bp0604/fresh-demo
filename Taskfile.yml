@@ -1,0 +1,28 @@
+version: '3'
+
+env:
+  BUILD_PATH: /Volumes/Work/Deno/fresh-project/build
+  BASE_PATH:  /Volumes/Work/Deno/fresh-project
+
+tasks:
+  help:
+    cmds:
+      - echo 'task build-nginx'
+      - echo 'task build-fresh'
+      - echo 'task up'
+
+  build-nginx:
+    cmds:
+      - docker-compose build nginx
+
+  build-fresh:
+    cmds:
+      - GIT_REVISION=$(git rev-parse HEAD)
+      - echo $GIT_REVISION
+      - docker-compose build fresh
+
+  up:
+    cmds:
+      - docker-compose up
+
+

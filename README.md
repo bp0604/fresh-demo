@@ -17,3 +17,13 @@ OK
 fresh.dev/api/uuid
 http://fresh.dev/api/bookmarks?query=spring&field=content
 
+# build
+
+```
+cd build
+#./build.sh
+docker-compose build fresh
+docker-compose build nginx
+docker-compose up
+```
+

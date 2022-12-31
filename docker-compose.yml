@@ -12,14 +12,15 @@ services:
   fresh:
     container_name: fresh
     image: registry.baomihua.xyz/baopeng/fresh:latest
-    # build:
-    #   context: ./
-    #   dockerfile: Dockerfile
-    #   args:
-    #     - GIT_REVISION # echo ${GIT_REVISION} 先确认有值。
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: base
+      args:
+        - GIT_REVISION # echo ${GIT_REVISION} 先确认有值。
     # restart: always
-    # environment:
-      # - ELASTICSEARCH_HOSTS="http://192.168.2.44:9200"
+    environment:
+      - ELASTICSEARCH_HOSTS=http://192.168.2.44:9200
       # security settings
       # - ELASTICSEARCH_USERNAME=elastic
       # - ELASTICSEARCH_PASSWORD=somethingsecret
