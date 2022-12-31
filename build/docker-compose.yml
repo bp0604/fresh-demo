@@ -18,13 +18,13 @@ services:
     #   args:
     #     - GIT_REVISION # echo ${GIT_REVISION} 先确认有值。
     # restart: always
-    environment:
-      - ELASTICSEARCH_HOSTS="http://192.168.2.44:9200"
+    # environment:
+      # - ELASTICSEARCH_HOSTS="http://192.168.2.44:9200"
       # security settings
       # - ELASTICSEARCH_USERNAME=elastic
       # - ELASTICSEARCH_PASSWORD=somethingsecret
     ports:
-      - 18000:8000
+      - 8000:8000
     networks:
       - fresh-network
     logging:
@@ -38,25 +38,21 @@ services:
     #   timeout: 10s # 设置检测超时时间
     #   retries: 3 # 设置重试次数
     #   start_period: 40s # 启动后，多少秒开始启动检测程序
-
-  whoami:
-    image: "traefik/whoami"
-    container_name: "whoami"
-    command:
-       # It tells whoami to start listening on 2001 instead of 80
-       - --port=2001
-       - --name=iamfoo
   
   nginx:
     container_name: fresh-nginx
     image: nginx:alpine
-    # restart: always
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: nginx
     ports:
       - 80:80
-    volumes:
-      # - ./web:/usr/share/nginx/html
-      # - ${pwd}/nginx/default.conf:/etc/nginx/conf.d/:ro
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    # volumes:
+    #  - ./web:/usr/share/nginx/html
+    #  - ./default.conf:/etc/nginx/conf.d/default.conf
+    #  - /Volumes/Work/Deno/fresh-project/build/nginx/:/etc/nginx/conf.d/
     networks:
       - fresh-network
     # healthcheck:
