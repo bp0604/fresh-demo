@@ -37,6 +37,22 @@ services:
     #   retries: 3 # 设置重试次数
     #   start_period: 40s # 启动后，多少秒开始启动检测程序
 
+  nginx:
+    container_name: fresh-nginx
+    image: nginx:alpine
+    # restart: always
+    ports:
+      - 10000:80
+    volumes:
+      - ${pwd}/nginx/default.conf:/etc/nginx/conf.d/:ro
+    networks:
+      - fresh-network
+    logging:
+      driver: json-file
+      options:
+        max-size: "200k" # 单个文件大小为200k
+        max-file: "10" # 最多10个文件
+
 # docker network create fresh-network
 networks:
   fresh-network:
@@ -56,5 +72,5 @@ networks:
 # search
 # curl -XGET "http://192.168.2.44:9200/bookmark-mysql/_search" -H 'Content-Type: application/json' -d'{  "query" : {    "match": { "name": "spring" }  },  "_source": ["name", "id", "content"],  "size": 10}'
 
-# curl http://localhost:8000/api/bookmarks?query=spring&field=content
+# curl http://localhost:18000/api/bookmarks?query=spring&field=content
 
